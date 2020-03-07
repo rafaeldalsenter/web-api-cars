@@ -27,7 +27,7 @@ namespace WebApiCars.Domain
         {
             if (id == default)
             {
-                AddError("Faltou preencher o valor Id");
+                AddError("Id value is invalid");
                 return;
             }
 
@@ -38,7 +38,7 @@ namespace WebApiCars.Domain
         {
             if (string.IsNullOrWhiteSpace(model))
             {
-                AddError("Modelo não pode ser vazio");
+                AddError("Model is invalid");
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace WebApiCars.Domain
         {
             if (year <= 1700 || year > DateTime.Now.AddYears(1).Year)
             {
-                AddError("Ano do modelo inválido");
+                AddError("Year of model is invalid");
                 return;
             }
 

@@ -15,7 +15,7 @@ namespace WebApiCars.Domain
         {
             if (id == default)
             {
-                AddError("Faltou preencher o valor Id");
+                AddError("Id value is invalid");
                 return;
             }
 
@@ -26,7 +26,7 @@ namespace WebApiCars.Domain
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                AddError("Modelo não pode ser vazio");
+                AddError("Name is invalid");
                 return;
             }
 
