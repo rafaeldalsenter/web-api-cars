@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApiCars.Application\WebApiCars.Application.csproj" />
+    <ProjectReference Include="..\WebApiCars.CrossCutting\WebApiCars.CrossCutting.csproj" />
   </ItemGroup>
 
 </Project>
