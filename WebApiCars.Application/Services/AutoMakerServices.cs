@@ -26,16 +26,16 @@ namespace WebApiCars.Application.Services
 
             if (!domain.IsValid())
             {
-                dto.Valid = false;
-                dto.Mensagem = string.Join(',', domain.ErrorMessages.ToArray());
+                //dto.Valid = false;
+                //dto.Mensagem = string.Join(',', domain.ErrorMessages.ToArray());
                 return dto;
             }
 
             _context.AutoMakers.Add(domain);
             _context.SaveChanges();
 
-            dto.Valid = true;
-            dto.Mensagem = "Auto maker successfully created.";
+            //dto.Valid = true;
+            //dto.Mensagem = "Auto maker successfully created.";
             return dto;
         }
     }

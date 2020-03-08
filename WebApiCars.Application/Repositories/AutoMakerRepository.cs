@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebApiCars.CrossCutting;
-using WebApiCars.Domain;
+using WebApiCars.CrossCutting.Dtos;
 
 namespace WebApiCars.Application.Repositories
 {
@@ -14,6 +14,11 @@ namespace WebApiCars.Application.Repositories
             _context = context;
         }
 
-        public IEnumerable<AutoMaker> Get() => _context.AutoMakers.ToList();
+        public IEnumerable<AutoMakerDto> Get() =>
+            _context.AutoMakers.Select(x => new AutoMakerDto
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
     }
 }

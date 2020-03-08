@@ -26,7 +26,6 @@ namespace WebApiCars.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddDbContext<WebApiCarsContext>(options
                 => options.UseInMemoryDatabase("InMemoryDatabase"));
             services.AddScoped<IAutoMakerRepository, AutoMakerRepository>();
@@ -39,6 +38,8 @@ namespace WebApiCars.Api
 
             services.AddGraphQL(o => { o.ExposeExceptions = false; })
                 .AddGraphTypes(ServiceLifetime.Scoped);
+
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
@@ -60,7 +61,6 @@ namespace WebApiCars.Api
             }
 
             app.UseRouting();
-
             app.UseGraphQL<ApiScheme>();
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
 
