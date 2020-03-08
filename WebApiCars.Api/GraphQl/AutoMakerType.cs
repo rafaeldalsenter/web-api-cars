@@ -8,6 +8,7 @@ namespace WebApiCars.Api.GraphQl
     {
         public AutoMakerType()
         {
+            Field(x => x.Id).Description("Id of Auto Maker");
             Field(x => x.Name).Description("Name of Auto Maker");
         }
     }

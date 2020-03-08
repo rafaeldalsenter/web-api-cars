@@ -1,6 +1,8 @@
 using GraphQL;
+using GraphQL.Http;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,39 +30,35 @@ namespace WebApiCars.Api
         {
             services.AddDbContext<WebApiCarsContext>(options
                 => options.UseInMemoryDatabase("InMemoryDatabase"));
+
+            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             services.AddScoped<IAutoMakerRepository, AutoMakerRepository>();
             services.AddScoped<IAutoMakerServices, AutoMakerServices>();
 
             services.AddScoped<IDependencyResolver>(s =>
                       new FuncDependencyResolver(s.GetRequiredService));
 
-            services.AddScoped<ApiScheme>();
+            services.AddScoped<ISchema, ApiScheme>();
+            services.AddScoped<ApiQuery>();
+            services.AddScoped<AutoMakerType>();
 
-            services.AddGraphQL(o => { o.ExposeExceptions = false; })
+            services.AddGraphQL(o => { o.ExposeExceptions = true; })
                 .AddGraphTypes(ServiceLifetime.Scoped);
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
             IAutoMakerServices autoMakerService)
         {
-            autoMakerService.Create(new AutoMakerDto
-            {
-                Name = "Teste"
-            });
+            autoMakerService.Create(new AutoMakerDto { Name = "Teste" });
+            autoMakerService.Create(new AutoMakerDto { Name = "Teste2" });
 
-            autoMakerService.Create(new AutoMakerDto
-            {
-                Name = "Teste2"
-            });
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
+
             app.UseGraphQL<ApiScheme>();
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
 

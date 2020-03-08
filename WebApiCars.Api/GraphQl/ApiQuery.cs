@@ -11,6 +11,11 @@ namespace WebApiCars.Api.GraphQl
                 "automakers",
                 resolve: context => autoMakerRepository.Get()
             );
+
+            //  Field<PlayerType>(
+            //"player",
+            //arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
+            //resolve: context => playerRepository.Get(context.GetArgument<int>("id")));
         }
     }
 }
