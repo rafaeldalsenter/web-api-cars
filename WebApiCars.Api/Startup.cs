@@ -1,12 +1,17 @@
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApiCars.Api.GraphQl;
 using WebApiCars.Application.Repositories;
 using WebApiCars.Application.Services;
 using WebApiCars.CrossCutting;
+using WebApiCars.CrossCutting.Dtos;
 
 namespace WebApiCars.Api
 {
@@ -26,16 +31,38 @@ namespace WebApiCars.Api
                 => options.UseInMemoryDatabase("InMemoryDatabase"));
             services.AddScoped<IAutoMakerRepository, AutoMakerRepository>();
             services.AddScoped<IAutoMakerServices, AutoMakerServices>();
+
+            services.AddScoped<IDependencyResolver>(s =>
+                      new FuncDependencyResolver(s.GetRequiredService));
+
+            services.AddScoped<ApiScheme>();
+
+            services.AddGraphQL(o => { o.ExposeExceptions = false; })
+                .AddGraphTypes(ServiceLifetime.Scoped);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            IAutoMakerServices autoMakerService)
         {
+            autoMakerService.Create(new AutoMakerDto
+            {
+                Name = "Teste"
+            });
+
+            autoMakerService.Create(new AutoMakerDto
+            {
+                Name = "Teste2"
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseRouting();
+
+            app.UseGraphQL<ApiScheme>();
+            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
 
             app.UseEndpoints(endpoints =>
             {

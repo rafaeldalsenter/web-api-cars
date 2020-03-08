@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using WebApiCars.CrossCutting;
 using WebApiCars.Domain;
@@ -14,7 +14,6 @@ namespace WebApiCars.Application.Repositories
             _context = context;
         }
 
-        public AutoMaker GetById(Guid id)
-            => _context.AutoMakers.Where(x => x.Id.Equals(id)).FirstOrDefault();
+        public IEnumerable<AutoMaker> Get() => _context.AutoMakers.ToList();
     }
 }

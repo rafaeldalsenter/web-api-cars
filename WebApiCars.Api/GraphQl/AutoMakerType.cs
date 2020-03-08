@@ -7,7 +7,8 @@ namespace WebApiCars.Api.GraphQl
     {
         public AutoMakerType()
         {
-            Name = "Produto";
+            Field(x => x.Id, type: typeof(IdGraphType))
+                .Description("Id of Auto Maker");
 
             Field(x => x.Name).Description("Name of Auto Maker");
         }

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace WebApiCars.Domain.Base
 {
     public abstract class BaseDomain
     {
+        [NotMapped]
         public IList<string> ErrorMessages { get; private set; }
 
         public void AddError(string message)
