@@ -1,17 +1,15 @@
 using GraphQL;
-using GraphQL.Http;
 using GraphQL.Server;
 using GraphQL.Server.Ui.GraphiQL;
-using GraphQL.Server.Ui.Playground;
-using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebApiCars.Api.GraphQl;
-using WebApiCars.Application.Repositories;
+using WebApiCars.Api.Configs;
+using WebApiCars.Api.GraphQL;
 using WebApiCars.Application.Services;
 using WebApiCars.CrossCutting;
 using WebApiCars.CrossCutting.Dtos;
@@ -20,29 +18,29 @@ namespace WebApiCars.Api
 {
     public class Startup
     {
+        private readonly IocStartup _iocStartup;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _iocStartup = new IocStartup();
         }
 
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<WebApiCarsContext>(options
-                => options.UseInMemoryDatabase("InMemoryDatabase"));
+            services.AddDbContext<WebApiCarsContext>(options => options.UseInMemoryDatabase("InMemoryDatabase"));
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
 
-            services.AddScoped<IAutoMakerRepository, AutoMakerRepository>();
-            services.AddScoped<IAutoMakerServices, AutoMakerServices>();
-
-            services.AddScoped<IDependencyResolver>(s =>
-                      new FuncDependencyResolver(s.GetRequiredService));
-
-            services.AddScoped<ApiScheme>();
-            services.AddScoped<ApiQuery>();
-            services.AddScoped<AutoMakerType>();
+            _iocStartup.Configure(services);
 
             services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+            services.Configure<KestrelServerOptions>(options =>
             {
                 options.AllowSynchronousIO = true;
             });
@@ -60,9 +58,10 @@ namespace WebApiCars.Api
 
             app.UseWebSockets();
 
-            app.UseGraphQLWebSockets<ApiScheme>("/graphql");
-            app.UseGraphQL<ApiScheme>("/graphql");
+            app.UseGraphQLWebSockets<ApiScheme>();
+            app.UseGraphQL<ApiScheme>();
             app.UseGraphiQLServer(new GraphiQLOptions());
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
         }

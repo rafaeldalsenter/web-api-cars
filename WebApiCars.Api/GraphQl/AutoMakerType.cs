@@ -2,7 +2,7 @@
 using WebApiCars.CrossCutting.Dtos;
 using WebApiCars.Domain;
 
-namespace WebApiCars.Api.GraphQl
+namespace WebApiCars.Api.GraphQL
 {
     public class AutoMakerType : ObjectGraphType<AutoMakerDto>
     {

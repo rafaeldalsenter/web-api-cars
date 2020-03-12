@@ -1,7 +1,7 @@
 ﻿using GraphQL;
 using GraphQL.Types;
 
-namespace WebApiCars.Api.GraphQl
+namespace WebApiCars.Api.GraphQL
 {
     public class ApiScheme : Schema
     {

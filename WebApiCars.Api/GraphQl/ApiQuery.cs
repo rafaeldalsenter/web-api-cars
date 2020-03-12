@@ -1,7 +1,7 @@
 ﻿using GraphQL.Types;
 using WebApiCars.Application.Repositories;
 
-namespace WebApiCars.Api.GraphQl
+namespace WebApiCars.Api.GraphQL
 {
     public class ApiQuery : ObjectGraphType
     {
