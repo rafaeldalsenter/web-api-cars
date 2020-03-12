@@ -1,6 +1,7 @@
 using GraphQL;
 using GraphQL.Http;
 using GraphQL.Server;
+using GraphQL.Server.Ui.GraphiQL;
 using GraphQL.Server.Ui.Playground;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
@@ -31,22 +32,22 @@ namespace WebApiCars.Api
             services.AddDbContext<WebApiCarsContext>(options
                 => options.UseInMemoryDatabase("InMemoryDatabase"));
 
-            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             services.AddScoped<IAutoMakerRepository, AutoMakerRepository>();
             services.AddScoped<IAutoMakerServices, AutoMakerServices>();
 
             services.AddScoped<IDependencyResolver>(s =>
                       new FuncDependencyResolver(s.GetRequiredService));
 
-            services.AddScoped<ISchema, ApiScheme>();
+            services.AddScoped<ApiScheme>();
             services.AddScoped<ApiQuery>();
             services.AddScoped<AutoMakerType>();
 
-            services.AddGraphQL(o => { o.ExposeExceptions = true; })
-                .AddGraphTypes(ServiceLifetime.Scoped);
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
 
-            services.AddControllers()
-                .AddNewtonsoftJson();
+            services.AddGraphQL(o => { o.ExposeExceptions = true; }).AddWebSockets();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
@@ -57,15 +58,13 @@ namespace WebApiCars.Api
 
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            app.UseRouting();
+            app.UseWebSockets();
 
-            app.UseGraphQL<ApiScheme>();
-            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseGraphQLWebSockets<ApiScheme>("/graphql");
+            app.UseGraphQL<ApiScheme>("/graphql");
+            app.UseGraphiQLServer(new GraphiQLOptions());
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
         }
     }
 }

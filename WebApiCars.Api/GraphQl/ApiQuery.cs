@@ -7,9 +7,11 @@ namespace WebApiCars.Api.GraphQl
     {
         public ApiQuery(IAutoMakerRepository autoMakerRepository)
         {
+            Name = "Query";
+
             Field<ListGraphType<AutoMakerType>>(
                 "automakers",
-                resolve: context => autoMakerRepository.Get()
+                resolve: (context) => autoMakerRepository.Get()
             );
 
             //  Field<PlayerType>(
