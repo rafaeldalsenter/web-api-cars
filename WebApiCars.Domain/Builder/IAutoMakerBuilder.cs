@@ -9,5 +9,7 @@ namespace WebApiCars.Domain.Builder
         IAutoMakerBuilder WithId(Guid id);
 
         IAutoMakerBuilder WithName(string name);
+
+        IAutoMakerBuilder WithCountry(string country);
     }
 }

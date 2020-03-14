@@ -10,6 +10,7 @@ namespace WebApiCars.Domain.Tests
         public void IsValid()
         {
             var domain = new AutoMakerBuilder()
+                .WithCountry("Brazil")
                 .WithName("name example")
                 .WithId(Guid.NewGuid())
                 .Build();
@@ -18,9 +19,22 @@ namespace WebApiCars.Domain.Tests
         }
 
         [Fact]
+        public void WithCountryIsEmpty_IsInvalid()
+        {
+            var domain = new AutoMakerBuilder()
+                .WithCountry("")
+                .WithName("name example")
+                .WithId(Guid.Empty)
+                .Build();
+
+            Assert.False(domain.IsValid());
+        }
+
+        [Fact]
         public void WithIdIsEmpty_IsInvalid()
         {
             var domain = new AutoMakerBuilder()
+                .WithCountry("Brazil")
                 .WithName("name example")
                 .WithId(Guid.Empty)
                 .Build();
@@ -32,8 +46,20 @@ namespace WebApiCars.Domain.Tests
         public void WithNameIsEmpty_IsInvalid()
         {
             var domain = new AutoMakerBuilder()
+                .WithCountry("Brazil")
                 .WithName(string.Empty)
                 .WithId(Guid.NewGuid())
+                .Build();
+
+            Assert.False(domain.IsValid());
+        }
+
+        [Fact]
+        public void WithoutCountry_IsInvalid()
+        {
+            var domain = new AutoMakerBuilder()
+                .WithName("name example")
+                .WithId(Guid.Empty)
                 .Build();
 
             Assert.False(domain.IsValid());
@@ -43,6 +69,7 @@ namespace WebApiCars.Domain.Tests
         public void WithoutId_IsInvalid()
         {
             var domain = new AutoMakerBuilder()
+                .WithCountry("Brazil")
                 .WithName("name example")
                 .Build();
 
@@ -53,6 +80,7 @@ namespace WebApiCars.Domain.Tests
         public void WithoutName_IsInvalid()
         {
             var domain = new AutoMakerBuilder()
+                .WithCountry("Brazil")
                 .WithId(Guid.NewGuid())
                 .Build();
 

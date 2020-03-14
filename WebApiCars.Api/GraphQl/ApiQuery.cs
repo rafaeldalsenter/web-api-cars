@@ -1,4 +1,5 @@
 ﻿using GraphQL.Types;
+using WebApiCars.Api.GraphQL.Types;
 using WebApiCars.Application.Repositories;
 
 namespace WebApiCars.Api.GraphQL
@@ -11,13 +12,15 @@ namespace WebApiCars.Api.GraphQL
 
             Field<ListGraphType<AutoMakerType>>(
                 "automakers",
-                resolve: (context) => autoMakerRepository.Get()
+                description: "Automakers from Memory Database",
+                arguments: new QueryArguments(
+                    new QueryArgument<StringGraphType> { Name = "name", Description = "Name of automaker" },
+                    new QueryArgument<StringGraphType> { Name = "country", Description = "Country of automaker" }
+                ),
+                resolve: context =>
+                    autoMakerRepository.Get(context.GetArgument<string>("name"),
+                        context.GetArgument<string>("country"))
             );
-
-            //  Field<PlayerType>(
-            //"player",
-            //arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
-            //resolve: context => playerRepository.Get(context.GetArgument<int>("id")));
         }
     }
 }

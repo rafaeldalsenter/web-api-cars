@@ -6,8 +6,15 @@ namespace WebApiCars.Domain.Builder
     {
         private Guid _id;
         private string _name;
+        private string _country;
 
-        public AutoMaker Build() => new AutoMaker(_id, _name);
+        public AutoMaker Build() => new AutoMaker(_id, _name, _country);
+
+        public IAutoMakerBuilder WithCountry(string country)
+        {
+            _country = country;
+            return this;
+        }
 
         public IAutoMakerBuilder WithId(Guid id)
         {

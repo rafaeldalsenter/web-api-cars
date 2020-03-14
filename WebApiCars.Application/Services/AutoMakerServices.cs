@@ -20,6 +20,7 @@ namespace WebApiCars.Application.Services
             dto.Id = Guid.NewGuid();
 
             var domain = new AutoMakerBuilder()
+                .WithCountry(dto.Country)
                 .WithName(dto.Name)
                 .WithId(dto.Id)
                 .Build();
@@ -34,8 +35,6 @@ namespace WebApiCars.Application.Services
             _context.AutoMakers.Add(domain);
             _context.SaveChanges();
 
-            //dto.Valid = true;
-            //dto.Mensagem = "Auto maker successfully created.";
             return dto;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WebApiCars.Api.GraphQL;
+using WebApiCars.Api.GraphQL.Types;
 using WebApiCars.Application.Repositories;
 using WebApiCars.Application.Services;
 
@@ -23,6 +24,7 @@ namespace WebApiCars.Api.Configs
         {
             services.AddScoped<ApiScheme>();
             services.AddScoped<ApiQuery>();
+            services.AddScoped<ApiMutation>();
             services.AddScoped<AutoMakerType>();
         }
     }

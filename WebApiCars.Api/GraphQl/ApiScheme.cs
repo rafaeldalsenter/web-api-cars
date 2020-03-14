@@ -8,7 +8,7 @@ namespace WebApiCars.Api.GraphQL
         public ApiScheme(IDependencyResolver resolver) : base(resolver)
         {
             Query = resolver.Resolve<ApiQuery>();
-            //Mutation = resolver.Resolve<NHLStatsMutation>();
+            Mutation = resolver.Resolve<ApiMutation>();
         }
     }
 }

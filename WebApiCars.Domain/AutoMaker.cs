@@ -5,10 +5,22 @@ namespace WebApiCars.Domain
 {
     public class AutoMaker : BaseDomain
     {
-        public AutoMaker(Guid id, string name)
+        public AutoMaker(Guid id, string name, string country)
         {
             AddId(id);
             AddName(name);
+            AddCountry(country);
+        }
+
+        public void AddCountry(string country)
+        {
+            if (string.IsNullOrWhiteSpace(country))
+            {
+                AddError("Country is invalid");
+                return;
+            }
+
+            Country = country;
         }
 
         public void AddId(Guid id)
@@ -35,5 +47,6 @@ namespace WebApiCars.Domain
 
         public Guid Id { get; private set; }
         public string Name { get; private set; }
+        public string Country { get; private set; }
     }
 }
