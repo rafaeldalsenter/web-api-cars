@@ -26,6 +26,7 @@ namespace WebApiCars.Api.Configs
             services.AddScoped<ApiQuery>();
             services.AddScoped<ApiMutation>();
             services.AddScoped<AutoMakerType>();
+            services.AddScoped<AutoMakerInputType>();
         }
     }
 }

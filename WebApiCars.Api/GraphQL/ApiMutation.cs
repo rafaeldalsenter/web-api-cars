@@ -9,13 +9,20 @@ namespace WebApiCars.Api.GraphQL
     {
         public ApiMutation(IAutoMakerServices autoMakerServices)
         {
-            Field<AutoMakerType>(
-                "createAutoMaker",
+            Name = "Mutation";
+
+            Field<AutoMakerInputType>(
+                "createautomaker",
+                description: "Create a new Automaker",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<AutoMakerType>> { Name = "automaker" }
+                    new QueryArgument<NonNullGraphType<AutoMakerInputType>> { Name = "automaker" }
                 ),
                 resolve: context =>
-                    autoMakerServices.Create(context.GetArgument<AutoMakerDto>("automaker"))
+                {
+                    //return autoMakerServices.Create(context.GetArgument<AutoMakerDto>("automaker"));
+                    return new AutoMakerInputType { };
+                }
+
             );
         }
     }

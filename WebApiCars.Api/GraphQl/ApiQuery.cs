@@ -1,4 +1,5 @@
 ﻿using GraphQL.Types;
+using System;
 using WebApiCars.Api.GraphQL.Types;
 using WebApiCars.Application.Repositories;
 

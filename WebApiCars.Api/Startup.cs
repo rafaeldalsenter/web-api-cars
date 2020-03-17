@@ -60,7 +60,7 @@ namespace WebApiCars.Api
 
             app.UseGraphQLWebSockets<ApiScheme>();
             app.UseGraphQL<ApiScheme>();
-            app.UseGraphiQLServer(new GraphiQLOptions());
+            app.UseGraphiQLServer(new GraphiQLOptions() { GraphiQLPath = "" });
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

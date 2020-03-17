@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebApiCars.CrossCutting;
 using WebApiCars.CrossCutting.Dtos;
@@ -26,5 +27,15 @@ namespace WebApiCars.Application.Repositories
                     Country = x.Country
                 })
                 .ToList();
+
+        public AutoMakerDto Get(Guid id) =>
+            _context.AutoMakers
+                .Where(x => x.Id.Equals(id))
+                .Select(x => new AutoMakerDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Country = x.Country
+                }).FirstOrDefault();
     }
 }
