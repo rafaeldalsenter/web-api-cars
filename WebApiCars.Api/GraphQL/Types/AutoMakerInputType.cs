@@ -8,6 +8,7 @@ namespace WebApiCars.Api.GraphQL.Types
         public AutoMakerInputType()
         {
             Name = "AutoMakerInput";
+
             Field(x => x.Name, type: typeof(StringGraphType));
             Field(x => x.Country, type: typeof(StringGraphType));
         }

@@ -1,6 +1,5 @@
 ﻿using GraphQL.Types;
 using WebApiCars.CrossCutting.Dtos;
-using WebApiCars.Domain;
 
 namespace WebApiCars.Api.GraphQL.Types
 {
