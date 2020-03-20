@@ -7,5 +7,7 @@ namespace WebApiCars.Application.Repositories
     public interface IAutoMakerRepository
     {
         IEnumerable<AutoMakerDto> Get(string name = null, string country = null);
+
+        AutoMakerDto Get(Guid id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebApiCars.CrossCutting;
 using WebApiCars.CrossCutting.Dtos;
@@ -27,5 +28,17 @@ namespace WebApiCars.Application.Repositories
                     Features = x.Features
                 })
                 .ToList();
+
+        public CarDto Get(Guid id)
+            => _context.Cars
+                .Where(x => x.Id.Equals(id))
+                .Select(x => new CarDto
+                {
+                    Id = x.Id,
+                    Year = x.Year,
+                    Model = x.Model,
+                    Features = x.Features
+                })
+                .FirstOrDefault();
     }
 }
