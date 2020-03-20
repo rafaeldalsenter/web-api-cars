@@ -1,10 +1,7 @@
-﻿using System;
-
-namespace WebApiCars.CrossCutting.Dtos
+﻿namespace WebApiCars.CrossCutting.Dtos
 {
-    public class AutoMakerDto
+    public class AutoMakerDto : BaseDto
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
     }

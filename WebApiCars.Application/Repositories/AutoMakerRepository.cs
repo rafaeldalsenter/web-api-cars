@@ -19,7 +19,7 @@ namespace WebApiCars.Application.Repositories
         public IEnumerable<AutoMakerDto> Get(string name = null, string country = null) =>
             _context.AutoMakers
                 .Where(x => name.IsNullOrWhiteSpace() || x.Name.Contains(name))
-                .Where(x => country.IsNullOrWhiteSpace() || x.Country.Contains(country))
+                .Where(x => country.IsNullOrWhiteSpace() || x.Country.Equals(country))
                 .Select(x => new AutoMakerDto
                 {
                     Id = x.Id,
@@ -27,15 +27,5 @@ namespace WebApiCars.Application.Repositories
                     Country = x.Country
                 })
                 .ToList();
-
-        public AutoMakerDto Get(Guid id) =>
-            _context.AutoMakers
-                .Where(x => x.Id.Equals(id))
-                .Select(x => new AutoMakerDto
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Country = x.Country
-                }).FirstOrDefault();
     }
 }

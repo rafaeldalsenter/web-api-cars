@@ -1,8 +1,11 @@
-﻿namespace WebApiCars.CrossCutting.Dtos
+﻿using System;
+
+namespace WebApiCars.CrossCutting.Dtos
 {
     public abstract class BaseDto
     {
-        public string Mensagem { get; set; }
+        public Guid Id { get; set; }
+        public string Message { get; set; }
         public bool Valid { get; set; }
     }
 }

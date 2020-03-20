@@ -17,7 +17,9 @@ namespace WebApiCars.Api.Configs
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IAutoMakerRepository, AutoMakerRepository>();
+            services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IAutoMakerServices, AutoMakerServices>();
+            services.AddScoped<ICarServices, CarServices>();
         }
 
         private void ConfigureGraphQLObjects(IServiceCollection services)
@@ -27,6 +29,8 @@ namespace WebApiCars.Api.Configs
             services.AddScoped<ApiMutation>();
             services.AddScoped<AutoMakerType>();
             services.AddScoped<AutoMakerInputType>();
+            services.AddScoped<CarType>();
+            services.AddScoped<CarInputType>();
         }
     }
 }

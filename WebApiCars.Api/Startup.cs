@@ -45,7 +45,7 @@ namespace WebApiCars.Api
                 options.AllowSynchronousIO = true;
             });
 
-            services.AddGraphQL(o => { o.ExposeExceptions = true; }).AddWebSockets();
+            services.AddGraphQL(o => { o.ExposeExceptions = false; }).AddWebSockets();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
