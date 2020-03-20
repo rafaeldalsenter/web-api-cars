@@ -51,9 +51,6 @@ namespace WebApiCars.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
             IAutoMakerServices autoMakerService)
         {
-            autoMakerService.Create(new AutoMakerDto { Name = "Gurgel", Country = "Brazil" });
-            autoMakerService.Create(new AutoMakerDto { Name = "Ford", Country = "United States" });
-
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseWebSockets();
