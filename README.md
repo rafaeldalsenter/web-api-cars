@@ -5,10 +5,6 @@ Esta aplicação exemplifica o uso do GraphQL para uma Web API. Aqui há duas en
 
 No projeto, está incluido a UI GraphiQL para fazer essas consultas no navegador. A mesma já é front-page da aplicação.
 
-Implementações em andamento (WIP):
-- Adicionar relacionamento entre as entidades
-- Criar instruções de Update.
-
 | CodeFactor |
 |:---:|
 |[![CodeFactor](https://www.codefactor.io/repository/github/rafaeldalsenter/web-api-cars/badge)](https://www.codefactor.io/repository/github/rafaeldalsenter/web-api-cars)|
